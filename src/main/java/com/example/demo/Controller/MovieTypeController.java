@@ -7,6 +7,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.MovieTypeMapper;
 import com.example.demo.Services.MovieType.IMovieTypeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -84,7 +85,7 @@ public class MovieTypeController {
     }
 
     @DeleteMapping("/admin/delete-movie-type/{id}") //API xoá thể loại phim
-    public ResponseEntity<?> deleteMovieType(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteMovieType(@PathVariable @Min(1) Integer id) {
         try {
             String response = iMovieTypeService.deleteMovieType(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

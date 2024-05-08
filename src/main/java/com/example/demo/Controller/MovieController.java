@@ -8,6 +8,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.MovieMapper;
 import com.example.demo.Services.Movie.IMovieService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,7 +48,7 @@ public class MovieController {
     }
 
     @GetMapping("/get-movie-by-id")  //API chi tiết từng movie
-    public ResponseEntity<?> getMovieById(@RequestParam("movieId") Integer movieId) {
+    public ResponseEntity<?> getMovieById(@RequestParam("movieId") @Min(1) Integer movieId) {
         try {
             Movie movieReturn = iMovieService.getMovieById(movieId);
             MovieResponse movieResponseReturn = MovieMapper.mapFromEntityToResponse(movieReturn);
@@ -126,7 +127,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/admin/delete-movie/{id}")  //API xoá movie
-    public ResponseEntity<?> deleteMovie(@PathVariable Integer id){
+    public ResponseEntity<?> deleteMovie(@PathVariable @Min(1) Integer id){
         try {
             String response = iMovieService.deleteMovie(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

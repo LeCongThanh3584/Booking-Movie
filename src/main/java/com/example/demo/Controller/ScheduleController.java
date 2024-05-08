@@ -8,6 +8,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.ScheduleMapper;
 import com.example.demo.Services.Schedule.IScheduleService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -133,7 +134,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/admin/delete-schedule/{id}") //API xoá rạp chiếu phim
-    public ResponseEntity<?> deleteSchedule(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteSchedule(@PathVariable @Min(1) Integer id) {
         try {
             String response = iScheduleService.deleteSchedule(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

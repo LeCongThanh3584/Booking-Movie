@@ -7,6 +7,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.SeatMapper;
 import com.example.demo.Services.Seat.ISeatService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class SeatController {
     private ISeatService iSeatService;
 
     @GetMapping("/user/get-seats-by-scheduleId") //API Lấy ra các ghế ngồi theo lịch chiếu phim
-    public ResponseEntity<?> getSeatsByScheduleId(@RequestParam Integer scheduleId) {
+    public ResponseEntity<?> getSeatsByScheduleId(@RequestParam @Min(1) Integer scheduleId) {
         try {
             List<SeatResponse> seatResponseList = iSeatService.getSeatsByScheduleId(scheduleId);
             return new ResponseEntity<>(seatResponseList, HttpStatus.OK);
@@ -87,7 +88,7 @@ public class SeatController {
     }
 
     @DeleteMapping("/admin/delete-seat/{id}") //API xoá ghế
-    public ResponseEntity<?> deleteSeat(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteSeat(@PathVariable @Min(1) Integer id) {
         try {
             String response = iSeatService.deleteSeat(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

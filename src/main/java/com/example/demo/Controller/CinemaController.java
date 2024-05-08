@@ -7,6 +7,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.CinemaMapper;
 import com.example.demo.Services.Cinema.ICinemaService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +40,7 @@ public class CinemaController {
     }
 
     @GetMapping("/get-cinema-by-id") //API chi tiết rạp theo id
-    public ResponseEntity<?> getCinemaById(@RequestParam("cinemaId") Integer cinemaId) {
+    public ResponseEntity<?> getCinemaById(@RequestParam("cinemaId") @Min(1) Integer cinemaId) {
         try {
             Cinema cinemaReturn = iCinemaService.getCinemaById(cinemaId);
             CinemaResponse cinemaResponseReturn = CinemaMapper.mapFromEntityToResponse(cinemaReturn);
@@ -115,7 +116,7 @@ public class CinemaController {
     }
 
     @DeleteMapping("/admin/delete-cinema/{id}") //API Xoá rạp
-    public ResponseEntity<?> deleteCinema(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteCinema(@PathVariable @Min(1) Integer id) {
         try {
             String response = iCinemaService.deleteCinema(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

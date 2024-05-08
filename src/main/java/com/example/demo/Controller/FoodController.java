@@ -7,6 +7,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.FoodMapper;
 import com.example.demo.Services.FoodService.IFoodService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -90,7 +91,7 @@ public class FoodController {
     }
 
     @DeleteMapping("/admin/delete-food/{id}") //API Xoá đồ ăn
-    public ResponseEntity<?> deleteFood(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteFood(@PathVariable @Min(1) Integer id) {
         try {
             String response = iFoodService.deleteFood(id);
             return new ResponseEntity<>(response, HttpStatus.OK);

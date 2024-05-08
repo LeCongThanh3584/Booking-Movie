@@ -7,6 +7,7 @@ import com.example.demo.Exceptions.NotFoundException;
 import com.example.demo.Mapper.RoomMapper;
 import com.example.demo.Services.Room.IRoomService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,7 +96,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/admin/delete-room/{id}") //API xoá rạp chiếu phim
-    public ResponseEntity<?> deleteRoom(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteRoom(@PathVariable @Min(1) Integer id) {
         try {
             String response = iRoomService.deleteRoom(id);
             return new ResponseEntity<>(response, HttpStatus.OK);
